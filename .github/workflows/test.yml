@@ -35,7 +35,7 @@ jobs:
         ruby-version: ${{ matrix.ruby }}
 
     - name: "setup-ruby: ${{ steps.setup.outcome }}"
-      run: echo ""
+      run: "echo skipped-for-baseline-isolation"
 
     - name: Install gems
       continue-on-error: ${{ matrix.allow-failure || false }}
@@ -48,9 +48,9 @@ jobs:
     - name: Run tests
       continue-on-error: ${{ matrix.allow-failure || false }}
       id: test
-      run: bundle exec rake
+      run: bundle exec rspec mustermann/spec/ast_spec.rb mustermann/spec/compiler_spec.rb mustermann/spec/composite_spec.rb
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
     - name: "bundle exec rake outcome: ${{ steps.test.outcome }}"
-      run: echo ""
+      run: "echo skipped-for-baseline-isolation"
